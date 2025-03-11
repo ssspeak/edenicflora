@@ -1,0 +1,64 @@
+.offers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.offerImage {
+    position: relative;
+    overflow: hidden;
+}
+
+.offerImage img {
+    display: block;
+    margin: 0 auto;
+}
+.circleOffer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+    background-color: rgb(241, 71, 5);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.circleOffer .offer {
+    font-size: 18px;
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    transform: translateY(-50%);
+    text-align: center;
+    line-height: 1;
+    display: block;
+    color: white;
+}
+
+.offerDesc {
+    position: absolute;
+    margin: 25px 30px 25px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.offerDesc h5, span{
+    color: #000;
+    font-weight: 600;
+}
+.offerDesc p{
+    color: #1d1d1d;
+    font-weight: 300;
+}

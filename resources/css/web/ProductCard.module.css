@@ -1,0 +1,138 @@
+.cardWrapper {
+    flex: 1 1 18%;
+    margin-bottom: 16px;
+    padding: 20px 20px !important;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease;
+}
+
+.cardWrapper:hover {
+    cursor: pointer;
+    border: 1px solid #c0c0c0; /* Show border on hover */
+    transform: translateY(-5px);
+}
+
+.customCard {
+    border: 2px solid transparent; /* Default: No border */
+    border-radius: 0;
+    transition: border 0.3s ease-in-out;
+}
+
+.cardImage {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.addToCartBtn {
+    display: hidden; /* Hide button by default */
+    width: 100%;
+    margin-top: 10px;
+}
+
+.customCard:hover .addToCartBtn {
+    display: block; /* Show button on hover */
+}
+
+.discountTag {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #f14705;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cardTitle {
+    background-color: #39a539;
+    color: white;
+    padding: 0px 3px 2px;
+    font-size: 14px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.starRating {
+    color: gold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Add animation for modal */
+:global(.modal.fade) .modal-dialog {
+    transition: transform 0.3s ease-out;
+}
+
+:global(.modal.show) .modal-dialog {
+    transform: none;
+}
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    transition: right 0.3s ease-in-out;
+    z-index: 1050;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+}
+
+.cart-drawer.show {
+    right: 0;
+}
+
+.cart-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.cart-drawer-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-drawer-body {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.cart-drawer-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cart-drawer-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.cart-drawer-body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.cart-drawer-body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.cardLink:hover {
+    text-decoration: none;
+    color: inherit;
+}

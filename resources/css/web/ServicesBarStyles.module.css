@@ -1,0 +1,45 @@
+/* CSS file or App.css */
+
+.servicesBar {
+    border: 1px solid #d9d9d9;
+    padding: 30px 20px;
+    background-color: #fff; /* Set background for the overall bar */
+    margin-bottom: 50px;
+}
+
+.serviceBox {
+    background-color: #f8f9fa; /* Light background for each box */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect for depth */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.serviceBox h5 {
+    font-weight: bold;
+    text-wrap: nowrap;
+}
+
+.serviceBox p {
+    color: #6c757d;
+    text-wrap: nowrap;
+}
+
+.serviceBox .icon {
+    color: #80c52f;
+    margin-right: 15px;
+    width: 40px; /* Fixed width for icon */
+    height: 40px; /* Fixed height for icon */
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.serviceBox:hover {
+    background-color: #e9ecef; /* Hover effect */
+    cursor: pointer;
+}
+

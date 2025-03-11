@@ -1,0 +1,90 @@
+.plantDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.productImage {
+    position: relative;
+}
+
+.productImage img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.discountBadge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #ff4444;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.productInfo {
+    padding: 1rem;
+}
+
+.pricing {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+}
+
+.originalPrice {
+    text-decoration: line-through;
+    color: #6c757d;
+    margin-right: 1rem;
+}
+
+.price {
+    font-weight: bold;
+    color: #198754;
+}
+
+.description {
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+.careInstructions,
+.features {
+    margin: 2rem 0;
+}
+
+.careInstructions h3,
+.features h3 {
+    margin-bottom: 1rem;
+}
+
+.careInstructions ul,
+.features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.careInstructions li,
+.features li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.careInstructions li:before,
+.features li:before {
+    content: "•";
+    color: #198754;
+    position: absolute;
+    left: 0;
+}
+
+.addToCartBtn {
+    margin-top: 2rem;
+    width: 100%;
+}

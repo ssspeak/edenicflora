@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
@@ -12,8 +11,13 @@
 
         <!-- Scripts -->
         @routes
-        @viteReactRefresh
-        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
+
+        @if (app()->environment('local'))
+            @viteReactRefresh
+        @endif
+
+        @vite(['resources/js/app.jsx'])
+
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMobileAlt, faUniversity } from '@fortawesome/free-solid-svg-icons';
+import { faMobileAlt, faUniversity, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { useCart } from '@/js/Context/CartContext';
 import styles from '@/css/web/CartItems.module.css';
 // Add these imports
@@ -12,6 +12,7 @@ const CartItems = ({ onClose = () => {} }) => {
     const { items, total, dispatch } = useCart();
     const [showCheckout, setShowCheckout] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState('');
+    const [copiedText, setCopiedText] = useState('');
 
     useEffect(() => {
         // Re-initialize totals when items change
@@ -42,6 +43,38 @@ const CartItems = ({ onClose = () => {} }) => {
         // Handle order confirmation logic here
         console.log('Order confirmed');
         setShowCheckout(false);
+    };
+
+    // Update the handleCopy function
+    const handleCopy = async (text) => {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                // For modern browsers
+                await navigator.clipboard.writeText(text);
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    textArea.remove();
+                } catch (err) {
+                    console.error('Failed to copy text:', err);
+                    return;
+                }
+            }
+            // Show copied text feedback
+            setCopiedText(text);
+            setTimeout(() => setCopiedText(''), 3000);
+        } catch (err) {
+            console.error('Failed to copy text:', err);
+        }
     };
 
     // Styles for checkout drawer - Add to your CSS module
@@ -230,13 +263,52 @@ const CartItems = ({ onClose = () => {} }) => {
                                     </div>
                                 </div>
 
+                                {paymentMethod && (
+                                    <div className={styles.paymentDetails}>
+                                        {(paymentMethod === 'easypaisa' || paymentMethod === 'jazzcash') && (
+                                            <div className={styles.mobileNumber}>
+                                                <span>03057009093</span>
+                                                <div className={styles.copyWrapper}>
+                                                    <FontAwesomeIcon
+                                                        icon={faCopy}
+                                                        className={styles.copyIcon}
+                                                        onClick={() => handleCopy('03057009093')}
+                                                    />
+                                                    {copiedText === '03057009093' && (
+                                                        <span className={styles.copiedText}>Copied!</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {paymentMethod === 'bank' && (
+                                            <div className={styles.bankDetails}>
+                                                <div className={styles.bankInfo}>
+                                                    <span>Faysal Bank IBAN: PK07FAYS3336301000004018</span>
+                                                    <div className={styles.copyWrapper}>
+                                                        <FontAwesomeIcon
+                                                            icon={faCopy}
+                                                            className={styles.copyIcon}
+                                                            onClick={() => handleCopy('PK07FAYS3336301000004018')}
+                                                        />
+                                                        {copiedText === 'PK07FAYS3336301000004018' && (
+                                                            <span className={styles.copiedText}>Copied!</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
                                 <p className="text-danger mb-3 small">
                                     Pay your invoice and enter the transaction ID to complete your order.
                                 </p>
 
                                 <div className={`${styles.totalAmount} mb-3`}>
-                                    <p className="mb-0 text-muted">Total Amount Payable:</p>
-                                    <h6 className="mb-0 fw-bold text-primary">Rs {total.toFixed(2)}/-</h6>
+                                    <p className="mb-0 text-muted">Total Amount Payable:
+                                    <span className="ms-2 mb-0 fw-bold text-primary">Rs {total.toFixed(2)}/-</span>
+                                    </p>
                                 </div>
 
                                 <Form.Group className="mb-3">

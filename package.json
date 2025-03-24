@@ -38,6 +38,8 @@
         "caniuse-lite": "^1.0.30001701",
         "react-bootstrap": "^2.10.9",
         "react-cartify": "^1.0.0",
-        "react-icons": "^5.5.0"
+        "react-icons": "^5.5.0",
+        "sonner": "^2.0.1",
+        "sweetalert2": "^11.17.2"
     }
 }

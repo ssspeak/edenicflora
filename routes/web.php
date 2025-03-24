@@ -4,15 +4,14 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\PlantController;
+use App\Models\Slide;
 
+use App\Http\Controllers\PlantController;
+use App\Http\Controllers\SlideController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'slides' => Slide::orderBy('order', 'asc')->get()
     ]);
 });
 
@@ -21,7 +20,7 @@ Route::get('/', function () {
 
 /**************** Admin Routes ******************* */
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
     Route::get('/', function () { return redirect()->route('dashboard'); });
@@ -39,7 +38,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/dashboard/components', function () {
         return Inertia::render('Admin/Components', [
             'title' => 'Welcome to Components Page',
-            'description' => 'This is the latest data from the database.',
+            'description' => 'This is the latest data from the component database.',
         ]);
     })->name('dashboard.components');
 
@@ -62,6 +61,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
+    //slider
+    Route::get('/slider', [SlideController::class, 'index'])->name('slider.index');
+    Route::post('/slider/store', [SlideController::class, 'store'])->name('slider.store');
+    Route::delete('/slider/{id}', [SlideController::class, 'destroy'])->name('slider.destroy');
+    Route::put('/slides/{slide}', [SlideController::class, 'update'])->name('slider.update');
 
 
 })->name('admin');

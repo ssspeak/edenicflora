@@ -7,7 +7,7 @@ import Offer2 from '@/images/Floral-Shop.webp';
 
 import { Cart } from 'react-cartify';
 
-export default function TwoColumnLayout() {
+export default function TwoColumnLayout({ slides }) {
 
     //console.log(Cart);
 
@@ -16,7 +16,7 @@ export default function TwoColumnLayout() {
             <div className="row">
                 {/* Left Column (9/12) */}
                 <div className="col-md-9">
-                    <CarouselComponent />
+                    <CarouselComponent slides={slides}/>
                 </div>
 
                 {/* Right Column (3/12) */}

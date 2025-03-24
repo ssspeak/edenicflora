@@ -29,6 +29,14 @@ export default function AdminSidebar() {
             </li>
             <li>
               <Link
+                href={route("slider.index")}
+                className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                Slider
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="#"
                 onClick={() => handleLinkClick(route("admin.dashboard.settings"))}
                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"

@@ -136,3 +136,13 @@
     text-decoration: none;
     color: inherit;
 }
+.cardDescription {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show only 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    min-height: 4.2em; /* Reserve space for 3 lines to prevent layout shift */
+    color: #3852f9;
+}

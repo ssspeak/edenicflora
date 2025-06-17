@@ -34,11 +34,14 @@
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@popperjs/core": "^2.11.8",
+        "@tinymce/tinymce-react": "^6.2.1",
         "bootstrap": "^5.3.3",
         "caniuse-lite": "^1.0.30001701",
         "react-bootstrap": "^2.10.9",
         "react-cartify": "^1.0.0",
         "react-icons": "^5.5.0",
+        "slate": "^0.117.0",
+        "slate-react": "^0.117.1",
         "sonner": "^2.0.1",
         "sweetalert2": "^11.17.2"
     }

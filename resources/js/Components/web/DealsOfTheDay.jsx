@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import ProductCard from '@/js/Components/web/ProductCard';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ProductCard from "@/js/Components/web/ProductCard";
 import styles from '@/css/web/DealsOfTheDay.module.css';
 
-export default function DealsOfTheDay() {
-    const [images, setImages] = useState([]);
+export default function Dealsoftheday() {
+    const [products, setProducts] = useState([]);
     const [countdown, setCountdown] = useState({
         hours: 0,
         minutes: 0,
@@ -11,14 +12,10 @@ export default function DealsOfTheDay() {
     });
 
     useEffect(() => {
-        const imageUrls = [
-            "https://images.pexels.com/photos/4503271/pexels-photo-4503271.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "https://images.pexels.com/photos/6208086/pexels-photo-6208086.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "https://images.pexels.com/photos/6208089/pexels-photo-6208089.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "https://images.pexels.com/photos/6208088/pexels-photo-6208088.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-        ];
-        setImages(imageUrls);
+        axios.get("/api/deals/latest").then(res => {
+            //console.log("Fetched products:", res.data);
+            setProducts(res.data);
+        });
     }, []);
 
     useEffect(() => {
@@ -45,7 +42,7 @@ export default function DealsOfTheDay() {
         <div className="container-fluid">
             <div className="catHeader">
                 <div className="catHeaderContent">
-                    <h2>Plants</h2>
+                    <h2>Deals of the Day</h2>
                     <div className="countDown">
                         <span>On Sale&nbsp;</span>
                         <span>{`${countdown.hours}:${countdown.minutes}:${countdown.seconds}`}</span>
@@ -58,11 +55,19 @@ export default function DealsOfTheDay() {
                     </a>
                 </div>
             </div>
-            <div className={styles.cardContainer}>
-                {images.map((image, index) => (
-                    <ProductCard key={index} image={image} index={index} />
+            <div className="row">
+                {products && products.length > 0 && products.map(product => (
+
+                    <div key={product.id} className="col-12 col-sm-6 col-lg-3 mb-4">
+                    <ProductCard
+                        product={product}
+                        showDiscount={product.discount > 0}
+                        cartVariant="success"
+                    />
+                    </div>
                 ))}
             </div>
+
         </div>
     );
 }

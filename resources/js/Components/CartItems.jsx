@@ -106,9 +106,9 @@ const CartItems = ({ onClose = () => {} }) => {
                     {items.map((item) => (
                         <div key={item.id} className="cart-item d-flex align-items-center p-3 border-bottom">
                             <img
-                                src={item.image}
+                                src={`/storage/${item.image}`}
                                 alt={item.name}
-                                className="cart-item-image me-3"
+                                className="cart-item-image me-3 rounded-circle"
                                 style={{ width: '80px', height: '80px', objectFit: 'cover' }}
                             />
                             <div className="flex-grow-1">
@@ -133,11 +133,12 @@ const CartItems = ({ onClose = () => {} }) => {
                                     </div>
                                     <div className="price-section">
                                         {item.discount > 0 && (
-                                            <span className="text-decoration-line-through text-muted me-2">
-                                                Rs{item.originalPrice}/-
+                                            <span className="text-decoration-line-through text-muted">
+                                                Rs {(item.originalPrice * item.quantity).toFixed(2)}/-
                                             </span>
                                         )}
-                                        <span className="fw-bold">Rs{item.price * item.quantity}/-</span>
+                                        <br />
+                                        <span className="fw-bold">Rs {(item.price * item.quantity).toFixed(2)}/-</span>
                                     </div>
                                 </div>
                             </div>

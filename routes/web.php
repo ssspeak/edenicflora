@@ -5,9 +5,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Slide;
+use App\Models\Tag;
+use App\Models\Category;
 
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\SlideController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -47,13 +50,24 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         return Inertia::render('Admin/Pages');
     })->name('dashboard.pages');
 
+     // Products admin page
+    Route::get('/dashboard/products', function () {
+        return Inertia::render('Admin/Products');
+    })->name('dashboard.products');
+
     // API routes for pages
     Route::prefix('api')->group(function () {
-        Route::get('/pages', [App\Http\Controllers\PageController::class, 'index'])->name('pages.index');
-        Route::get('/pages/{page}', [App\Http\Controllers\PageController::class, 'show'])->name('pages.show');
-        Route::post('/pages', [App\Http\Controllers\PageController::class, 'store'])->name('pages.store');
-        Route::put('/pages/{page}', [App\Http\Controllers\PageController::class, 'update'])->name('pages.update');
-        Route::delete('/pages/{page}', [App\Http\Controllers\PageController::class, 'destroy'])->name('pages.destroy');
+        //Route::get('/pages', [App\Http\Controllers\PageController::class, 'index'])->name('pages.index');
+        //Route::get('/pages/{page}', [App\Http\Controllers\PageController::class, 'show'])->name('pages.show');
+        //Route::post('/pages', [App\Http\Controllers\PageController::class, 'store'])->name('pages.store');
+        //Route::put('/pages/{page}', [App\Http\Controllers\PageController::class, 'update'])->name('pages.update');
+        //Route::delete('/pages/{page}', [App\Http\Controllers\PageController::class, 'destroy'])->name('pages.destroy');
+
+        Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+        Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+        Route::put('/products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
+
     });
 
 
@@ -71,6 +85,17 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 })->name('admin');
 
-Route::get('/plant/{slug}', [PlantController::class, 'show'])->name('plant.show');
+
+Route::get('/{category}/{product}', [ProductController::class, 'show'])->name('product.show');
+
+// Add this route for categories
+Route::get('/admin/api/categories', function () {
+    return Category::all();
+});
+Route::get('/admin/api/tags', function () {
+    return Tag::all();
+});
+Route::get('/api/deals/latest', [App\Http\Controllers\ProductController::class, 'latestDeals']);
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'products']);
 
 require __DIR__.'/auth.php';

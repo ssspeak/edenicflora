@@ -21,10 +21,10 @@ export default function AdminSidebar() {
             </li>
             <li>
               <Link
-                href={route("dashboard.components")}
+                href={route("menu.index")}
                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
-                Components
+                Menu
               </Link>
             </li>
             <li>
@@ -37,13 +37,13 @@ export default function AdminSidebar() {
             </li>
             <li>
               <Link
-                href="#"
-                onClick={() => handleLinkClick(route("admin.dashboard.settings"))}
+                href={route("dashboard.components")}
                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
-                Settings
+                Components
               </Link>
             </li>
+
             <li>
               <Link
                 href={route('dashboard.products')}
@@ -52,6 +52,16 @@ export default function AdminSidebar() {
                 <i className="bi bi-box-seam"></i> Products
               </Link>
             </li>
+            <li>
+              <Link
+                href="#"
+                onClick={() => handleLinkClick(route("admin.dashboard.settings"))}
+                className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                Settings
+              </Link>
+            </li>
+
           </ul>
         </nav>
       </aside>

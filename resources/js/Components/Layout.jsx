@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import Components
 import TopBar from './TopBar';
@@ -7,11 +7,19 @@ import NavigationBar from './NavigationBar';
 import Footer from './Footer';
 
 const Layout = ({ children }) => {
+    const [menus, setMenus] = useState([]);
+
+    useEffect(() => {
+        fetch('/menus-json')
+            .then(res => res.json())
+            .then(data => setMenus(data));
+    }, []);
+
     return (
         <>
             <TopBar />
             <Header />
-            <NavigationBar />
+            <NavigationBar menus={menus} />
             <main className='container-fluid'>{children}</main>
             <Footer />
         </>

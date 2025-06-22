@@ -7,10 +7,12 @@ use Inertia\Inertia;
 use App\Models\Slide;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Menu;
 
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MenuController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -59,9 +61,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::prefix('api')->group(function () {
         //Route::get('/pages', [App\Http\Controllers\PageController::class, 'index'])->name('pages.index');
         //Route::get('/pages/{page}', [App\Http\Controllers\PageController::class, 'show'])->name('pages.show');
-        //Route::post('/pages', [App\Http\Controllers\PageController::class, 'store'])->name('pages.store');
-        //Route::put('/pages/{page}', [App\Http\Controllers\PageController::class, 'update'])->name('pages.update');
-        //Route::delete('/pages/{page}', [App\Http\Controllers\PageController::class, 'destroy'])->name('pages.destroy');
+        //Route::post('/pages', [App\Http\Controllers\PageController::class, 'store'])->te'])->name('pages.update');
+        //Route::delete('/pages/{page}', [App\Http\Controllers\PageController::class, 'dname('pages.store');
+        //Route::put('/pages/{page}', [App\Http\Controllers\PageController::class, 'updaestroy'])->name('pages.destroy');
 
         Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
         Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
@@ -83,6 +85,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::put('/slides/{slide}', [SlideController::class, 'update'])->name('slider.update');
 
 
+    Route::resource('menus', MenuController::class)->names('menu');
+
+
 })->name('admin');
 
 
@@ -97,5 +102,8 @@ Route::get('/admin/api/tags', function () {
 });
 Route::get('/api/deals/latest', [App\Http\Controllers\ProductController::class, 'latestDeals']);
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'products']);
+Route::get('/menus-json', function () {
+    return Menu::with('children')->whereNull('parent_id')->orderBy('order')->get();
+});
 
 require __DIR__.'/auth.php';

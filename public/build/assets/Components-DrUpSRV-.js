@@ -1,0 +1,1 @@
+import{j as o}from"./app-qDmvry4P.js";import r from"./Dashboard-CrePbC0R.js";import"./AuthenticatedLayout-BFuZ1kEw.js";import"./ApplicationLogo-BqWZ8fJZ.js";import"./transition-DckWj-dQ.js";import"./AdminSidebar-DjdfQfP7.js";function a(t){return o.jsx(r,{children:o.jsx("h1",{children:"Components Page"})})}export{a as default};

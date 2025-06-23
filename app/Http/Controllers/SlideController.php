@@ -104,7 +104,9 @@ class SlideController extends Controller {
 
     public function update(Request $request, Slide $slide)
     {
-        //Log::debug('Received update request', $request);
+        /*Log::debug('Received update request', [
+            'data' => $request->all()
+        ]);*/
         $request->validate([
             'title' => 'required|string|max:50',
             'description' => 'nullable|string|max:200',

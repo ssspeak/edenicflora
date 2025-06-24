@@ -17,12 +17,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MenuController;
 
 Route::get('/', function () {
-    /*return Inertia::render('Welcome', [
+    return Inertia::render('Welcome', [
         'slides' => Slide::orderBy('order', 'asc')->get()
-    ]);*/
+    ]);
 
 
-    $slides = Slide::orderBy('order', 'asc')->get();
+    /*$slides = Slide::orderBy('order', 'asc')->get();
 
     $slides->each(function ($slide) {
         $slide->image_url = $slide->image_url; // use accessor
@@ -30,22 +30,11 @@ Route::get('/', function () {
 
     return Inertia::render('Welcome', [
         'slides' => $slides
-    ]);
+    ]);*/
 
 });
 
-//get files/images from storage
-Route::get('/media/{folder}/{filename}', function ($folder, $filename) {
-    $safeFolder = Str::of($folder)->basename();
-    $safeFilename = Str::of($filename)->basename();
-    $path = storage_path("app/public/{$safeFolder}/{$safeFilename}");
 
-    if (!file_exists($path)) {
-        abort(404);
-    }
-
-    return response()->file($path);
-})->where(['folder' => '.*', 'filename' => '.*']);
 
 
 /**************** Admin Routes ******************* */

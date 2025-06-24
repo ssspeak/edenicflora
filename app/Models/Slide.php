@@ -9,10 +9,5 @@ class Slide extends Model {
     use HasFactory;
     protected $fillable = ['title', 'description','button_text', 'button_link', 'image', 'order'];
 
-    public function getImageUrlAttribute()
-    {
-        return url('/media/' . $this->image);
-    }
-
 
 }

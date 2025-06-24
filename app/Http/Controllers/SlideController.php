@@ -44,7 +44,9 @@ class SlideController extends Controller {
         // Get uploaded image
         $image = $request->file('image');
         $extension = $image->getClientOriginalExtension();
-        $imagePath = 'slides/' . uniqid() . '.' . $extension;
+        //$imagePath = 'slides/' . uniqid() . '.' . $extension;
+        $filename = uniqid() . '.' . $extension;
+        $imagePath = 'slides/' . $filename;
 
         //Log::info('Processing image', ['path' => $imagePath]);
 
@@ -57,8 +59,13 @@ class SlideController extends Controller {
             ->encode($encoder);
 
         // Save image to storage
-        Storage::disk('public')->put($imagePath, $resizedImage->toString());
+        //Storage::disk('public')->put($imagePath, $resizedImage->toString());
+        $publicPath = public_path('slides');
+        if (!file_exists($publicPath)) {
+            mkdir($publicPath, 0775, true);
+        }
 
+        file_put_contents($publicPath . '/' . $filename, $resizedImage->toString());
 
         //Log::info('Image stored successfully', ['path' => $imagePath]);
 

@@ -7,7 +7,7 @@ export default function CarouselComponent({ slides = [] }) { // ✅ Ensure slide
                 {slides.length > 0 ? (
                     slides.map((slide, index) => (
                         <div key={slide.id} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-<img src={slide.image} className="d-block w-100" alt={slide.title} />
+<img src={`/${slide.image}`} className="d-block w-100" alt={slide.title} />
                             <div className="carousel-caption d-none d-md-block text-start position-absolute top-50 translate-middle-y">
                                 <h5 className="text-danger text-uppercase fw-bold">{slide.title}</h5>
                                 <h3 className="text-dark fw-bolder">{slide.description}</h3>

@@ -20,18 +20,6 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'slides' => Slide::orderBy('order', 'asc')->get()
     ]);
-
-
-    /*$slides = Slide::orderBy('order', 'asc')->get();
-
-    $slides->each(function ($slide) {
-        $slide->image_url = $slide->image_url; // use accessor
-    });
-
-    return Inertia::render('Welcome', [
-        'slides' => $slides
-    ]);*/
-
 });
 
 

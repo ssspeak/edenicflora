@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'slides' => [
+            'driver'     => 'local',
+            'root'       => env('SLIDES_DISK_PATH', public_path('slides')),
+            'url'        => env('SLIDES_DISK_URL', env('APP_URL') . '/slides'),
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

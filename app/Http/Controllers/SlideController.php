@@ -19,73 +19,54 @@ use Illuminate\Support\Facades\Storage;
 class SlideController extends Controller {
     public function index() {
         $slides = Slide::orderBy('order', 'asc')->get();
+         $slides->each(function ($slide) {
+            $slide->image = $slide->image_url; // replace relative path with full URL
+        });
         return Inertia::render('Admin/Slider', ['slides' => $slides]);
     }
 
-    public function store(Request $request)
-    {
-        //Log::info('Received store request', $request->all()); // Log request data
+   public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'button_text' => 'nullable|string|max:30',
+        'button_link' => 'nullable|url|max:255',
+        'order' => 'required|integer',
+        'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+    ]);
 
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'button_text' => 'nullable|string|max:30',
-            'button_link' => 'nullable|url|max:255',
-            'order' => 'required|integer',
-            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
-        ]);
-
-        //Log::info('Validation passed', $validatedData);
-
-        try {
-        // Create ImageManager instance
+    try {
         $manager = new ImageManager(new Driver());
-
-        // Get uploaded image
         $image = $request->file('image');
         $extension = $image->getClientOriginalExtension();
-        //$imagePath = 'slides/' . uniqid() . '.' . $extension;
         $filename = uniqid() . '.' . $extension;
-        $imagePath = 'slides/' . $filename;
 
-        //Log::info('Processing image', ['path' => $imagePath]);
-
-        // Choose encoder based on file type
         $encoder = $extension === 'png' ? new PngEncoder(90) : new JpegEncoder(90);
-
-        // Resize and encode image
         $resizedImage = $manager->read($image)
             ->resize(1200, 400)
             ->encode($encoder);
 
-        // Save image to storage
-        //Storage::disk('public')->put($imagePath, $resizedImage->toString());
-        $publicPath = public_path('slides');
-        if (!file_exists($publicPath)) {
-            mkdir($publicPath, 0775, true);
-        }
+        // Save to custom disk `slides`
+        Storage::disk('slides')->put($filename, $resizedImage->toString());
 
-        file_put_contents($publicPath . '/' . $filename, $resizedImage->toString());
-
-        //Log::info('Image stored successfully', ['path' => $imagePath]);
 
         $slide = Slide::create([
             'title' => $request->title,
             'description' => $request->description,
             'button_text' => $request->button_text,
             'button_link' => $request->button_link,
-            'image' => $imagePath,
-            'order' => $request->order, // Auto-increment order
+            'image' => $filename,
+            'order' => $request->order,
         ]);
 
-        //Log::info('Slide created successfully', ['slide' => $slide]);
-
         return redirect()->route('slider.index')->with('success', 'Slide added successfully.');
-        } catch (\Exception $e) {
-            //Log::error('Error in storing slide', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
-        }
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
     }
+}
+
+
 
     public function destroy($id)
     {

@@ -224,7 +224,8 @@ export default function Slider({ slides }) {
     {slides?.map((slide) => (
         <tr key={slide.id} className="border border-gray-300 dark:border-gray-700">
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                <img src={`/storage/${slide.image}`} alt={slide.title} className="w-20 h-auto rounded-lg" />
+                <img src={slide.image} alt={slide.title} className="w-20 h-auto rounded-lg" />
+
             </td>
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{slide.title}</td>
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{slide.description}</td>

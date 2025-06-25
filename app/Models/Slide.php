@@ -10,9 +10,9 @@ class Slide extends Model {
     use HasFactory;
     protected $fillable = ['title', 'description','button_text', 'button_link', 'image', 'order'];
 
-    public function getImageUrlAttribute()
+    public function getImageAttribute($value)
     {
-        return Storage::disk('slides')->url($this->image); // uses disk URL + path
+        return asset('slides/' . $value);
     }
 
 }

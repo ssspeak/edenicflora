@@ -18,10 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller {
     public function index() {
-        $slides = Slide::orderBy('order', 'asc')->get();
-         $slides->each(function ($slide) {
-            $slide->image = $slide->image_url; // replace relative path with full URL
-        });
+         $slides = Slide::orderBy('order', 'asc')->get();
         return Inertia::render('Admin/Slider', ['slides' => $slides]);
     }
 
@@ -48,7 +45,7 @@ class SlideController extends Controller {
             ->encode($encoder);
 
         // Save to custom disk `slides`
-        Storage::disk('slides')->put($filename, $resizedImage->toString());
+        Storage::disk('slides')->put('slides/' .$filename, $resizedImage->toString());
 
 
         $slide = Slide::create([

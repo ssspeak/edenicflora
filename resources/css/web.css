@@ -124,41 +124,41 @@
 
 
 .custom-carousel-btn {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(128, 128, 128, 0.7); /* Gray with slight transparency */
-    border-radius: 50%; /* Circular buttons */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    position: absolute;
-    top: 50%; /* Move buttons to vertical center */
-    transform: translateY(-50%); /* Perfect centering */
-    z-index: 10; /* Ensure it appears above images */
+    width: 50px !important;
+    height: 50px !important;
+    background-color: rgba(128, 128, 128, 0.7) !important; /* Gray with slight transparency */
+    border-radius: 50% !important; /* Circular buttons */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    position: absolute !important;
+    top: 50% !important; /* Move buttons to vertical center */
+    transform: translateY(-50%) !important; /* Perfect centering */
+    z-index: 10 !important; /* Ensure it appears above images */
 }
 
 /* Position the previous button further to the left */
 .carousel-control-prev {
-    left: 10px; /* Adjust as needed */
+    left: 10px !important; /* Adjust as needed */
 }
 
 /* Move the next button close to the previous one */
 .carousel-control-next {
-    right: 10px; /* Adjust this value to your preference */
+    right: 10px !important; /* Adjust this value to your preference */
 }
 
 /* Ensures the icons are visible */
 .custom-carousel-btn .carousel-control-prev-icon,
 .custom-carousel-btn .carousel-control-next-icon {
-    filter: invert(1); /* Makes the icon white */
-    width: 20px;
-    height: 20px;
+    filter: invert(1) !important; /* Makes the icon white */
+    width: 20px !important;
+    height: 20px !important;
 }
 
 /* Optional: Add hover effect */
 .custom-carousel-btn:hover {
-    background-color: rgba(100, 100, 100, 0.9); /* Slightly darker gray on hover */
+    background-color: rgba(100, 100, 100, 0.9) !important; /* Slightly darker gray on hover */
 }
 
 

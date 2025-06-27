@@ -85,6 +85,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::post('/slider/store', [SlideController::class, 'store'])->name('slider.store');
     Route::delete('/slider/{id}', [SlideController::class, 'destroy'])->name('slider.destroy');
     Route::put('/slides/{slide}', [SlideController::class, 'update'])->name('slider.update');
+    Route::post('/slider/update-order', [SlideController::class, 'updateOrder'])->name('slider.updateOrder');
 
 
     Route::resource('menus', MenuController::class)->names('menu');

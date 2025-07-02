@@ -1,1 +1,0 @@
-import{j as r}from"./app-D4JCRXyj.js";import{C as t}from"./CartItems-CQhWf0Ws.js";import"./index-D5wlNysw.js";const a=()=>r.jsxs("div",{children:[r.jsx("h1",{children:"Shopping Cart"}),r.jsx(t,{})]});export{a as default};

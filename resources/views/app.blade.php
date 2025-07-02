@@ -12,9 +12,9 @@
         <!-- Scripts -->
         @routes
 
-        @if (app()->environment('local'))
+        @env('local')
             @viteReactRefresh
-        @endif
+        @endenv
 
         @vite(['resources/js/app.jsx'])
 

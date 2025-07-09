@@ -57,7 +57,7 @@ export default function Dealsoftheday() {
             </div>
             <div className="row">
                 {products && products.length > 0 && products.map(product => (
-
+                    
                     <div key={product.id} className="col-12 col-sm-6 col-lg-3 mb-4">
                     <ProductCard
                         product={product}

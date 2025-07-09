@@ -18,7 +18,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
+                                <Link href={route('dashboard')}>
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
                             </div>
@@ -28,15 +28,15 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
+                                    Home
                                 </NavLink>
 
-                                <NavLink
+                                {/*<NavLink
                                     href={route('dashboard.pages')}
                                     active={route().current('dashboard.pages')}
                                 >
                                     Pages
-                                </NavLink>
+                                </NavLink>*/}
 
                             </div>
                         </div>

@@ -67,6 +67,14 @@ return [
             'visibility' => 'public',
         ],
 
+        'products' => [
+            'driver'     => 'local',
+            'root'       => env('PRODUCTS_DISK_PATH', public_path('products')),
+            'url'        => env('PRODUCTS_DISK_URL', env('APP_URL') . '/products'),
+            'visibility' => 'public',
+        ],
+
+
     ],
 
     /*

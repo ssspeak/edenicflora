@@ -32,5 +32,44 @@ class MenuController extends Controller
         return redirect()->route('menu.index');
     }
 
-    // Add edit, update, destroy as needed...
+    public function edit($id)
+    {
+        $menu = Menu::findOrFail($id);
+        $menus = Menu::whereNull('parent_id')->where('id', '!=', $id)->get(); // exclude self
+        return Inertia::render('Admin/MenuEdit', [
+            'menu' => $menu,
+            'menus' => $menus,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'link' => 'nullable|string|max:255',
+            'parent_id' => 'nullable|exists:menus,id',
+            'order' => 'nullable|integer',
+        ]);
+
+        $menu = Menu::findOrFail($id);
+        $menu->update($validated);
+
+        return redirect()->route('menu.index')->with('success', 'Menu updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $menu = Menu::findOrFail($id);
+
+        // Optional: Delete children too
+        if ($menu->children()->count()) {
+            $menu->children()->delete();
+        }
+
+        $menu->delete();
+
+        return redirect()->route('menu.index')->with('success', 'Menu item deleted.');
+    }
+
+
 }

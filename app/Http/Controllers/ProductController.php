@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\JpegEncoder;
+use Intervention\Image\Encoders\PngEncoder;
+
+use Illuminate\Support\Facades\Storage;
+
 class ProductController extends Controller
 {
     public function index()
@@ -35,8 +42,24 @@ class ProductController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $manager = new ImageManager(new Driver());
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $filename = uniqid() . '.' . $extension;
+
+            $encoder = $extension === 'png'
+                ? new PngEncoder(90)
+                : new JpegEncoder(90);
+
+            // No resizing — just read and encode
+            $encodedImage = $manager->read($image)->encode($encoder);
+
+            // Save to products disk (no "products/" prefix in filename unless you want subfolders)
+            Storage::disk('products')->put($filename, $encodedImage->toString());
+
+            $data['image'] = $filename;
         }
+
 
         $product = Product::create($data);
 
@@ -63,21 +86,40 @@ class ProductController extends Controller
             'tags.*' => 'exists:tags,id',
         ]);
 
-        // Update slug if name has changed
+        // Update slug if name changed
         if ($product->name !== $data['name']) {
             $data['slug'] = Str::slug($data['name']);
         }
 
-        // Handle image upload if a new image is provided
+        // Handle new image
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+            // Delete old image from products disk
+            if ($product->image && Storage::disk('products')->exists($product->getRawOriginal('image'))) {
+                Storage::disk('products')->delete($product->getRawOriginal('image'));
+            }
+
+            // Encode and store new image
+            $manager = new ImageManager(new Driver());
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $filename = uniqid() . '.' . $extension;
+
+            $encoder = $extension === 'png'
+                ? new PngEncoder(90)
+                : new JpegEncoder(90);
+
+            $encodedImage = $manager->read($image)->encode($encoder);
+
+            Storage::disk('products')->put($filename, $encodedImage->toString());
+
+            $data['image'] = $filename;
         } else {
-            // If not uploading a new image, keep the old one
-            unset($data['image']);
+            unset($data['image']); // retain existing image if not uploading new one
         }
 
         $product->update($data);
 
+        // Sync tags if provided
         if (isset($data['tags'])) {
             $product->tags()->sync($data['tags']);
         }
@@ -87,8 +129,15 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        // Delete image file from 'products' disk if it exists
+        if ($product->image && Storage::disk('products')->exists($product->getRawOriginal('image'))) {
+            Storage::disk('products')->delete($product->getRawOriginal('image'));
+        }
+
+        // Detach tags and delete product
         $product->tags()->detach();
         $product->delete();
+
         return response()->json(['success' => true]);
     }
 
@@ -110,6 +159,7 @@ class ProductController extends Controller
             ->whereHas('category', function ($q) use ($category) {
                 $q->where('slug', $category);
             })->firstOrFail();
+        
 
         return Inertia::render('Product/Show', [
             'product' => $product,
@@ -121,7 +171,7 @@ class ProductController extends Controller
 
     $filter = $request->query('filter');
 
-    $query = Product::query();
+    $query = Product::with('category');
 
     switch ($filter) {
         case 'new':

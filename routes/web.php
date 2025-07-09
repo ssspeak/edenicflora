@@ -3,22 +3,43 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use App\Models\Slide;
-use App\Models\Tag;
-use App\Models\Category;
-use App\Models\Menu;
 
-use App\Http\Controllers\PlantController;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Slide;
+use App\Models\Menu;
+use App\Models\Tag;
+
+use App\Mail\TestMail;
+
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\AdminController;
+
+/*Route::get('/test-email', function () {
+    $data = [
+        'name' => 'Test User',
+        'email' => 'test@example.com'
+    ];
+
+    Mail::to('asif.isb@outlook.com')->send(new TestMail($data));
+
+    return '✅ Test email sent to your_email@example.com';
+});*/
 
 Route::get('/', function () {
+    $slides = Slide::orderBy('order', 'asc')->get();
+    $topDiscountedProducts = Product::with('category')->orderByDesc('discount')->take(2)->get();
+
     return Inertia::render('Welcome', [
-        'slides' => Slide::orderBy('order', 'asc')->get()
+        'slides' => $slides,
+        'topDiscountedProducts' => $topDiscountedProducts,
     ]);
 });
 
@@ -90,6 +111,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::resource('menus', MenuController::class)->names('menu');
 
+    Route::get('dashboard/settings', [AdminController::class, 'settings'])->name('dashboard.settings');
+    Route::post('dashboard/settings/saveemail', [AdminController::class, 'saveemail'])->name('dashboard.settings.saveemail');
+
+    Route::get('dashboard/orders', [OrderController::class, 'index'])->name('dashboard.orders');
+    Route::get('dashboard/orders/{order_number}', [OrderController::class, 'show'])->name('dashboard.orders.show');
+    Route::post('/dashboard/orders/{orderNumber}/status', [OrderController::class, 'updateStatus'])->name('dashboard.orders.updatestatus');
 
 })->name('admin');
 
@@ -108,5 +135,7 @@ Route::get('/products', [App\Http\Controllers\ProductController::class, 'product
 Route::get('/menus-json', function () {
     return Menu::with('children')->whereNull('parent_id')->orderBy('order')->get();
 });
+
+Route::post('/orders', [OrderController::class, 'store']);
 
 require __DIR__.'/auth.php';

@@ -171,15 +171,15 @@ export default function Products() {
     };
 
     return (
-        <Dashboard title="Manage Products" description="Create and manage products">
-            <div className="p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+        <Dashboard title="Manage Products" description="">
+
                 <button
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition mb-4"
+                    className="bg-green-600 text-white my-4 px-4 py-2 rounded hover:bg-green-700 transition"
                     onClick={() => handleShowForm()}
                 >
                     {showForm ? "Close Form" : "+ Add New Product"}
                 </button>
-            </div>
+
 
             {showForm && (
                 <div className="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg mb-6">
@@ -326,26 +326,32 @@ export default function Products() {
                 </div>
             )}
 
-            <div className="mt-6">
-                <h2 className="text-xl font-semibold mb-3">Existing Products</h2>
+            <div className="">
                 <div className="overflow-x-auto">
                     <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-700 mt-6">
                         <thead>
-                            <tr className="bg-gray-100 dark:bg-gray-700">
-                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Product Name</th>
+                            <tr className="bg-gray-100 dark:bg-gray-700 text-left">
+                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Image</th>
+                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Product Title</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Category</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Price</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Discount</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Rating</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Best Seller</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Popular</th>
-                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Tags</th>
                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {products.map((p) => (
                                 <tr key={p.id} className="border border-gray-300 dark:border-gray-700">
+                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                                        <img
+                                            src={`${p.image}`}
+                                            alt={p.name}
+                                            className="w-16 h-16 object-cover rounded"
+                                        />
+                                    </td>
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{p.name}</td>
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{p.category?.name}</td>
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{p.price}</td>
@@ -353,16 +359,10 @@ export default function Products() {
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{p.rating}</td>
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{p.is_best_seller ? "Yes" : "No"}</td>
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{p.is_popular ? "Yes" : "No"}</td>
-                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                        {p.tags.map((t) => (
-                                            <span key={t.id} className="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded mr-1 mb-1">
-                                                {t.name}
-                                            </span>
-                                        ))}
-                                    </td>
+
                                     <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
                                         <button
-                                            className="bg-yellow-500 text-white px-2 py-1 rounded-lg mr-2"
+                                            className="bg-blue-500 text-white px-2 py-1 rounded-lg mr-2"
                                             onClick={() => handleShowForm(p)}
                                         >
                                             Edit
@@ -380,6 +380,7 @@ export default function Products() {
                     </table>
                 </div>
             </div>
+
         </Dashboard>
     );
 }

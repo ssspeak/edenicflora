@@ -1,10 +1,12 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 
+
 const ProductRow = ({ products }) => {
     if (!products || products.length === 0) {
         return <p className="text-center">No products found.</p>;
     }
+
 
     return (
         <div className="row">

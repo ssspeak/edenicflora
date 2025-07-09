@@ -19,6 +19,7 @@ function Header() {
                 <Row className="align-items-center">
                     {/* Left: Logo */}
                     <Col xs={4} className="text-left">
+                    <a href="/">
                         <img
                             src={Logo}
                             width="80"
@@ -26,6 +27,7 @@ function Header() {
                             className="d-inline-block align-top"
                             alt="company logo"
                         />
+                    </a>
                     </Col>
 
                     {/* Center: Search Form */}

@@ -56,7 +56,7 @@ const ProductCard = ({ product, showDiscount, cartVariant }) => {
         >
             <Card.Img
                 variant="top"
-                src={`/storage/${product.image}`} // 👈 ensure correct path
+                src={`${product.image}`} // 👈 ensure correct path
                 alt={product.name}
                 className={styles.cardImage}
             />

@@ -30,7 +30,7 @@ const AllProducts = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
-
+    
     return (
         <div className={[styles.allProducts, 'container-fluid'].join(' ')}>
             <div className={styles.allProductsHeader}>

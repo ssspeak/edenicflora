@@ -14,17 +14,22 @@ import AllProducts from '@/js/Components/web/AllProducts';
 
 import CartProvider from "@/js/Providers/CartProvider"; // Wrap in CartProvider
 
-export default function Welcome({slides}) {
+
+export default function Welcome({slides, topDiscountedProducts}) {
 
   return (
+    <>
+            <Head title="Cart - Edenic Flora" />
+
     <CartProvider>
         <Layout>
-            <TwoColumnLayout slides={slides}/>
+            <TwoColumnLayout slides={slides} topDiscountedProducts={topDiscountedProducts} />
             <ServicesBar />
             <DealsOfTheDay />
             <AllProducts />
 
         </Layout>
     </CartProvider>
+    </>
   );
 }

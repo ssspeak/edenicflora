@@ -45,6 +45,6 @@
         "slate-react": "^0.117.1",
         "sonner": "^2.0.1",
         "sortablejs": "^1.15.6",
-        "sweetalert2": "^11.17.2"
+        "sweetalert2": "^11.22.2"
     }
 }

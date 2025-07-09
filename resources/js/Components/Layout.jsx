@@ -6,6 +6,8 @@ import Header from './Header';
 import NavigationBar from './NavigationBar';
 import Footer from './Footer';
 
+import { Toaster } from 'sonner';
+
 const Layout = ({ children }) => {
     const [menus, setMenus] = useState([]);
 
@@ -17,6 +19,8 @@ const Layout = ({ children }) => {
 
     return (
         <>
+            <Toaster position="top-center" richColors />
+
             <TopBar />
             <Header />
             <NavigationBar menus={menus} />

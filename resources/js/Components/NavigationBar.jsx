@@ -3,8 +3,8 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "@inertiajs/react";
 
 function NavigationBar({ menus }) {
-    // Get the last three parent menus for dropdowns
-    const dropdownMenus = menus.slice(-3);
+    // Get the last three menus
+    const dropdownMenus = menus.slice(-6);
 
     return (
         <Navbar className="mainNavigation" expand="lg" style={{ backgroundColor: '#b7783c' }}>
@@ -14,13 +14,13 @@ function NavigationBar({ menus }) {
                     <Nav className="mx-auto">
 
                         {dropdownMenus.map(menu => (
-                            <NavDropdown
-                                title={menu.title}
-                                id={`nav-dropdown-${menu.id}`}
-                                key={menu.id}
-                            >
-                                {menu.children && menu.children.length > 0 ? (
-                                    menu.children.map(sub => (
+                            menu.children && menu.children.length > 0 ? (
+                                <NavDropdown
+                                    title={menu.title}
+                                    id={`nav-dropdown-${menu.id}`}
+                                    key={menu.id}
+                                >
+                                    {menu.children.map(sub => (
                                         <NavDropdown.Item
                                             as={Link}
                                             href={sub.link || "#"}
@@ -28,11 +28,18 @@ function NavigationBar({ menus }) {
                                         >
                                             {sub.title}
                                         </NavDropdown.Item>
-                                    ))
-                                ) : (
-                                    <NavDropdown.Item disabled>No submenus</NavDropdown.Item>
-                                )}
-                            </NavDropdown>
+                                    ))}
+                                </NavDropdown>
+                            ) : (
+                                <Nav.Link
+                                    as={Link}
+                                    href={menu.link || "#"}
+                                    key={menu.id}
+                                    className="text-white fw-bold"
+                                >
+                                    {menu.title}
+                                </Nav.Link>
+                            )
                         ))}
 
                     </Nav>

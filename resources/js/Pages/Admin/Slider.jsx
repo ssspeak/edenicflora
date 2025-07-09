@@ -104,12 +104,11 @@ export default function Slider({ slides }) {
     };
 
     return (
-        <Dashboard title="Manage Sliders" description="Create and manage homepage sliders">
+        <Dashboard title="Manage Sliders" description="">
             <Toaster position="top-right" richColors />
 
-            <div className="p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
                 <button
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition mb-4"
+                    className="bg-green-600 text-white my-4 px-4 py-2 rounded hover:bg-green-700 transition mb-4"
                     onClick={() => {
                         setShowForm(!showForm);
                         setEditingSlide(null);
@@ -119,10 +118,10 @@ export default function Slider({ slides }) {
                 >
                     {showForm ? "Close Form" : "+ Add New Slide"}
                 </button>
-            </div>
+
 
             {showForm && (
-                    <div className="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg mb-6">
+                    <div className="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg">
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label className="block text-gray-700 dark:text-gray-300">Title</label>
@@ -206,8 +205,7 @@ export default function Slider({ slides }) {
                 )}
 
 
-            <div className="mt-6">
-                <h2 className="text-xl font-semibold mb-3">Existing Slides</h2>
+            <div className="">
                 <table className="w-full border-collapse border border-gray-300 dark:border-gray-700 mt-6">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-700">
@@ -237,13 +235,22 @@ export default function Slider({ slides }) {
             </td>
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{slide.order}</td>
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                <button onClick={() => handleEdit(slide)} className="bg-blue-500 text-white px-2 py-1 rounded-lg mr-2">
-                    Edit
-                </button>
-                <button onClick={() => handleDelete(slide.id)} className="bg-red-500 text-white px-2 py-1 rounded-lg">
-                    Delete
-                </button>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => handleEdit(slide)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+                    >
+                        Edit
+                    </button>
+                    <button
+                        onClick={() => handleDelete(slide.id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                    >
+                        Delete
+                    </button>
+                </div>
             </td>
+
         </tr>
     ))}
 </tbody>

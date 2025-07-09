@@ -4,6 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobileAlt, faUniversity, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { useCart } from '@/js/Context/CartContext';
 import styles from '@/css/web/CartItems.module.css';
+
+import axios from 'axios';
+import { toast } from 'sonner';
+import Swal from 'sweetalert2';
+
 // Add these imports
 import easypaisa from '@/images/easypaisa.png';
 import jazzcash from '@/images/jazzcash.png';
@@ -13,6 +18,7 @@ const CartItems = ({ onClose = () => {} }) => {
     const [showCheckout, setShowCheckout] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState('');
     const [copiedText, setCopiedText] = useState('');
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         // Re-initialize totals when items change
@@ -39,11 +45,62 @@ const CartItems = ({ onClose = () => {} }) => {
         setShowCheckout(false);
     };
 
-    const handleConfirm = () => {
-        // Handle order confirmation logic here
-        console.log('Order confirmed');
+  const handleConfirm = async () => {
+    if (!items.length) {
+        toast.error("Your cart is empty.");
+        return;
+    }
+
+    // Get product IDs
+    const productIds = items.map(item => item.id);
+
+    // Manually extract values from form
+    const form = document.querySelector('#checkout-form');
+    const name = form.querySelector('input[placeholder="Name *"]').value;
+    const phone = form.querySelector('input[placeholder="Phone Number *"]').value;
+    const email = form.querySelector('input[placeholder="Email *"]').value;
+    const address = form.querySelector('textarea[placeholder="Address *"]').value;
+    const transactionId = form.querySelector('input[placeholder="Enter transaction ID"]').value;
+
+    // ✅ Require payment method
+    if (!paymentMethod) {
+        toast.error("Please select a payment method.");
+        return; // stop submission
+    }
+
+    setIsProcessing(true);
+
+    try {
+        const response = await axios.post('/orders', {
+            product_ids: productIds,
+            name,
+            phone,
+            email,
+            address,
+            payment_method: paymentMethod,
+            transaction_id: transactionId,
+        });
+
+        const orderNumber = response.data.order_number;
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Order Placed',
+            html: `Your order has been placed successfully.<br><strong>Order Number:</strong> ${orderNumber}`,
+        });
+
+        dispatch({ type: "CLEAR_CART" });
         setShowCheckout(false);
-    };
+    } catch (error) {
+        console.error("Order error:", error);
+        toast.error("Something went wrong while placing the order.");
+    } finally {
+        setIsProcessing(false);
+    }
+};
+
+
+
 
     // Update the handleCopy function
     const handleCopy = async (text) => {
@@ -99,14 +156,36 @@ const CartItems = ({ onClose = () => {} }) => {
         );
     }
 
+
+
+
     return (
         <>
+            {isProcessing && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 9999
+                }}>
+                    <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <div className={styles.cartItemsContainer}>
                 <div className={styles.cartItems}>
+
                     {items.map((item) => (
                         <div key={item.id} className="cart-item d-flex align-items-center p-3 border-bottom">
                             <img
-                                src={`/storage/${item.image}`}
+                                src={`${item.image}`}
                                 alt={item.name}
                                 className="cart-item-image me-3 rounded-circle"
                                 style={{ width: '80px', height: '80px', objectFit: 'cover' }}
@@ -157,7 +236,7 @@ const CartItems = ({ onClose = () => {} }) => {
                 <div className={styles.cartSummary}>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h4 className="mb-0">Total:</h4>
-                        <h4 className="mb-0">Rs{total.toFixed(2)}/-</h4>
+                        <h4 className="mb-0">Rs {total.toFixed(2)}/-</h4>
                     </div>
                     <div className="d-flex gap-2">
                         <Button
@@ -206,7 +285,7 @@ const CartItems = ({ onClose = () => {} }) => {
                             />
                         </div>
                         <div className={styles.checkoutDrawerBody}>
-                            <Form>
+                            <Form  id="checkout-form">
                                 <div className={styles.formRow}>
                                     <Form.Group>
                                         <Form.Control
@@ -242,7 +321,9 @@ const CartItems = ({ onClose = () => {} }) => {
                                     />
                                 </Form.Group>
 
-                                <h6 className="mb-2">Payment Methods</h6>
+                                <h6 className="mb-2">Payment Methods<small className="text-muted ms-2"> (Click icon for details)</small></h6>
+
+
                                 <div className={styles.paymentMethods}>
                                     <div
                                         className={`${styles.paymentMethod} ${paymentMethod === 'easypaisa' ? styles.active : ''}`}

@@ -13,7 +13,7 @@ export default function AdminSidebar() {
           <ul>
             <li>
               <Link
-                href={route("dashboard.home")}
+                href={route("dashboard")}
                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 Home
@@ -35,14 +35,14 @@ export default function AdminSidebar() {
                 Slider
               </Link>
             </li>
-            <li>
+            {/*<li>
               <Link
                 href={route("dashboard.components")}
                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 Components
               </Link>
-            </li>
+            </li>*/}
 
             <li>
               <Link
@@ -54,8 +54,15 @@ export default function AdminSidebar() {
             </li>
             <li>
               <Link
-                href="#"
-                onClick={() => handleLinkClick(route("admin.dashboard.settings"))}
+                href={route('dashboard.orders')}
+                className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                <i className="bi bi-box-seam"></i> Orders
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={route("dashboard.settings")}
                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 Settings

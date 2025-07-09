@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Head } from '@inertiajs/react';
+
 import { Button, Modal } from 'react-bootstrap';
 import { useCart } from '@/js/Context/CartContext';
 import Layout from '@/js/Components/Layout';
@@ -13,6 +15,11 @@ const ShowContent = ({ product }) => {
     const [showModal, setShowModal] = useState(false);
     const [showCart, setShowCart] = useState(false);
 
+    // ✅ Use flat discount logic (Rs off, not %)
+    const displayPrice = product.discount
+        ? product.price - product.discount
+        : product.price;
+
     const handleAddToCart = () => {
         dispatch({
             type: "ADD_TO_CART",
@@ -20,9 +27,7 @@ const ShowContent = ({ product }) => {
                 id: product.id,
                 name: product.name,
                 image: product.image,
-                price: product.discount
-                    ? product.price * (1 - product.discount / 100)
-                    : product.price,
+                price: displayPrice,
                 originalPrice: product.price,
                 discount: product.discount
             }
@@ -30,31 +35,26 @@ const ShowContent = ({ product }) => {
         setShowModal(true);
     };
 
-    const handleContinueShopping = () => {
-        setShowModal(false);
-    };
-
+    const handleContinueShopping = () => setShowModal(false);
     const handleCheckout = () => {
         setShowModal(false);
         setShowCart(true);
     };
 
-    const displayPrice = product.discount
-        ? product.price - product.discount
-        : product.price;
-
     const care = product.care_instructions || {};
     const features = product.features || [];
 
     return (
+        <>
+        <Head title="Cart - Edenic Flora" />
+
         <Layout>
             <div className={styles.plantDetails}>
                 <div className={`${styles.productImage} mt-4`}>
-                    <img src={`/storage/${product.image}`} alt={product.name} />
-
+                    <img src={product.image} alt={product.name} />
                     {product.discount > 0 && (
                         <div className={styles.discountBadge}>
-                            -{product.discount}
+                            Rs -{product.discount}
                         </div>
                     )}
                 </div>
@@ -64,33 +64,26 @@ const ShowContent = ({ product }) => {
                     <div className={styles.pricing}>
                         {product.discount > 0 && (
                             <span className={styles.originalPrice}>
-                                Rs{product.price}/-
+                                Rs {product.price}/-
                             </span>
                         )}
                         <span className={styles.price}>
-                            Rs{displayPrice.toFixed(2)}/-
+                            Rs {displayPrice.toFixed(2)}/-
                         </span>
                     </div>
 
                     <p
-                    className={styles.description}
-                    dangerouslySetInnerHTML={{ __html: product.description }}
+                        className={styles.description}
+                        dangerouslySetInnerHTML={{ __html: product.description }}
                     />
-
 
                     {(care.water || care.sunlight || care.temperature) && (
                         <div className={styles.careInstructions}>
                             <h3>Care Instructions</h3>
                             <ul>
-                                {care.water && (
-                                    <li><strong>Water:</strong> {care.water}</li>
-                                )}
-                                {care.sunlight && (
-                                    <li><strong>Sunlight:</strong> {care.sunlight}</li>
-                                )}
-                                {care.temperature && (
-                                    <li><strong>Temperature:</strong> {care.temperature}</li>
-                                )}
+                                {care.water && <li><strong>Water:</strong> {care.water}</li>}
+                                {care.sunlight && <li><strong>Sunlight:</strong> {care.sunlight}</li>}
+                                {care.temperature && <li><strong>Temperature:</strong> {care.temperature}</li>}
                             </ul>
                         </div>
                     )}
@@ -166,15 +159,14 @@ const ShowContent = ({ product }) => {
                 </div>
             </div>
         </Layout>
+        </>
     );
 };
 
-const Show = (props) => {
-    return (
-        <CartProvider>
-            <ShowContent {...props} />
-        </CartProvider>
-    );
-};
+const Show = (props) => (
+    <CartProvider>
+        <ShowContent {...props} />
+    </CartProvider>
+);
 
 export default Show;

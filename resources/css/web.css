@@ -96,7 +96,7 @@
   /* Style for the main navigation */
 .mainNavigation {
     background-color: #b7783c; /* Custom background color */
-    height: 40px;
+    eight: 40px;
   }
 
   /* Style for Nav items */
@@ -126,42 +126,58 @@
 .custom-carousel-btn {
     width: 50px !important;
     height: 50px !important;
-    background-color: rgba(128, 128, 128, 0.7) !important; /* Gray with slight transparency */
-    border-radius: 50% !important; /* Circular buttons */
+    background-color: #fff !important;
+    border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     border: none !important;
     position: absolute !important;
-    top: 50% !important; /* Move buttons to vertical center */
-    transform: translateY(-50%) !important; /* Perfect centering */
-    z-index: 10 !important; /* Ensure it appears above images */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10 !important;
 }
 
-/* Position the previous button further to the left */
 .carousel-control-prev {
-    left: 10px !important; /* Adjust as needed */
+    left: 10px !important;
 }
 
-/* Move the next button close to the previous one */
 .carousel-control-next {
-    right: 10px !important; /* Adjust this value to your preference */
-}
+    right: 10px !important;
+}  /* Adjust this value to your preference */
 
-/* Ensures the icons are visible */
+
 .custom-carousel-btn .carousel-control-prev-icon,
 .custom-carousel-btn .carousel-control-next-icon {
-    filter: invert(1) !important; /* Makes the icon white */
+    filter: invert(1) !important;
     width: 20px !important;
     height: 20px !important;
 }
 
-/* Optional: Add hover effect */
 .custom-carousel-btn:hover {
-    background-color: rgba(100, 100, 100, 0.9) !important; /* Slightly darker gray on hover */
+    background-color: rgba(100, 100, 100, 0.9) !important;
 }
 
+@media (max-width: 768px) {
+    .custom-carousel-btn {
+        width: 35px !important;
+        height: 35px !important;
+    }
 
+    .custom-carousel-btn .carousel-control-prev-icon,
+    .custom-carousel-btn .carousel-control-next-icon {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .carousel-control-prev {
+        left: 5px !important;
+    }
+
+    .carousel-control-next {
+        right: 5px !important;
+    }
+}
 
   .footer {
     background-color: #b7783c; /* Light background color */
@@ -284,3 +300,5 @@
     opacity: 1;
     visibility: visible;
 }
+
+

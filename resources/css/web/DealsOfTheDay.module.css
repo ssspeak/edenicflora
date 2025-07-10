@@ -5,3 +5,41 @@
     justify-content: space-between;
 
   }
+.catHeader {
+  margin-bottom: 1rem;
+}
+.catHeader h2 {
+  font-size: 1.25rem; /* default */
+}
+
+.countDown span {
+  font-size: 1rem;
+}
+
+.catHeaderLink a {
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .catHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .countDown span {
+    font-size: 1.125rem;
+  }
+
+  .catHeaderLink a {
+    font-size: 1.125rem;
+  }
+    .catHeaderContent,
+  .catHeaderLink {
+    width: 100%;
+  }
+
+  .catHeaderLink a {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+}

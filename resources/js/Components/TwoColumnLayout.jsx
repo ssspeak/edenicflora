@@ -7,7 +7,7 @@ export default function TwoColumnLayout({ slides, topDiscountedProducts }) {
         <div className="my-4">
             <div className="row">
                 {/* Left Column */}
-                <div className="col-md-9">
+                <div className="col-md-9 mb-3 mb-md-0">
                     <CarouselComponent slides={slides} />
                 </div>
 

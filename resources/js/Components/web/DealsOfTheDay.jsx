@@ -39,25 +39,25 @@ export default function Dealsoftheday() {
     }, []);
 
     return (
-        <div className="container-fluid">
-            <div className="catHeader">
+        <div className="container-fluid mt-2">
+            <div className="catHeader d-flex flex-column flex-md-row justify-content-between align-items-md-center text-center text-md-start">
                 <div className="catHeaderContent">
-                    <h2>Deals of the Day</h2>
-                    <div className="countDown">
-                        <span>On Sale&nbsp;</span>
-                        <span>{`${countdown.hours}:${countdown.minutes}:${countdown.seconds}`}</span>
+                    <h2 className="fs-4 fs-md-2 mb-1">Deals of the Day</h2>
+                    <div className="countDown text-muted fs-6 fs-md-5">
+                    <span>On Sale&nbsp;</span>
+                    <span>{`${countdown.hours}:${countdown.minutes}:${countdown.seconds}`}</span>
                     </div>
                 </div>
 
-                <div className="catHeaderLink">
-                   <a href="">
-                        View All
-                    </a>
+                <div className="catHeaderLink mt-2 mt-md-0">
+                    <a href="#" className="fs-6 fs-md-5 d-inline-block">View All</a>
                 </div>
             </div>
+
+
             <div className="row">
                 {products && products.length > 0 && products.map(product => (
-                    
+
                     <div key={product.id} className="col-12 col-sm-6 col-lg-3 mb-4">
                     <ProductCard
                         product={product}

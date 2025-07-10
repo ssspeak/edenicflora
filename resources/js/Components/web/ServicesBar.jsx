@@ -1,67 +1,36 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { FaHome, FaHeadset, FaUndo , FaHandsHelping, FaCalendarCheck } from 'react-icons/fa';
+import {
+    FaHome,
+    FaHeadset,
+    FaUndo,
+    FaHandsHelping,
+    FaCalendarCheck
+} from 'react-icons/fa';
 
 import styles from '@/css/web/ServicesBarSTyles.module.css';
 
 export default function ServicesBar() {
+    const services = [
+        { icon: <FaHome size={30} />, title: "Services", desc: "Home Delivery" },
+        { icon: <FaHeadset size={30} />, title: "24/7 Support", desc: "Dedicated support" },
+        { icon: <FaUndo size={30} />, title: "Return Policy", desc: "Full Replacement" },
+        { icon: <FaHandsHelping size={30} />, title: "Customer Care", desc: "Helping you 24/7" },
+        { icon: <FaCalendarCheck size={30} />, title: "On Site Visits", desc: "Schedule Visit" },
+    ];
+
     return (
-        <div className={`${styles.servicesBar} container-fluid`}>
-            <Row className="justify-content-between h-100">
-                {/* Column 1 */}
-                <Col md={2} sm={4} className="full-height-width">
-                    <div className={`${styles.serviceBox} d-flex`}>
-                        <FaHome size={40} className={styles.icon} />
-                        <div className="ms-1">
-                            <h5>Services</h5>
-                            <p>Home Delivery</p>
+        <div className={`${styles.servicesBar} container-fluid py-4`}>
+            <Row className="g-3 justify-content-center text-center">
+                {services.map((service, index) => (
+                    <Col key={index} xs={12} sm={6} md={4} lg className="d-flex justify-content-center">
+                        <div className={`${styles.serviceBox} p-3 w-100`}>
+                            <div className={`${styles.iconWrapper} mb-2`}>{service.icon}</div>
+                            <h6 className="fw-bold mb-1">{service.title}</h6>
+                            <p className="text-muted small mb-0">{service.desc}</p>
                         </div>
-                    </div>
-                </Col>
-
-                {/* Column 2 */}
-                <Col md={2} sm={4} className="">
-                    <div className={`${styles.serviceBox} d-flex`}>
-                        <FaHeadset size={40} className={styles.icon} />
-                        <div className="ms-1">
-                            <h5>24/7 Support</h5>
-                            <p>Dedicated support</p>
-                        </div>
-                    </div>
-                </Col>
-
-                {/* Column 3 */}
-                <Col md={2} sm={4} className="">
-                    <div className={`${styles.serviceBox} d-flex`}>
-                        <FaUndo size={40} className={styles.icon} />
-                        <div className="ms-1">
-                            <h5>Return Policy</h5>
-                            <p>Full Replacement</p>
-                        </div>
-                    </div>
-                </Col>
-
-                {/* Column 4 */}
-                <Col md={2} sm={4} className="">
-                    <div className={`${styles.serviceBox} d-flex `}>
-                        <FaHandsHelping size={40} className={styles.icon} />
-                        <div className="ms-1">
-                            <h5>Customer Care</h5>
-                            <p>Helping you 24/7</p>
-                        </div>
-                    </div>
-                </Col>
-
-                {/* Column 5 */}
-                <Col md={2} sm={4} className="">
-                    <div className={`${styles.serviceBox} d-flex`}>
-                        <FaCalendarCheck size={40} className={styles.icon} />
-                        <div className="ms-1">
-                            <h5>On Site Visits</h5>
-                            <p>Schedule Visit</p>
-                        </div>
-                    </div>
-                </Col>
+                    </Col>
+                ))}
             </Row>
         </div>
     );

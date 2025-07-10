@@ -19,15 +19,18 @@ export default function CarouselComponent({ slides = [] }) {
                                 <div className="carousel-overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
                                 {/* Slide Text Content */}
-                                <div className="carousel-caption d-none d-md-block text-start position-absolute p-4 custom-caption">
-                                    <h2 className="carousel-title fw-bold text-warning mb-3">
+                                <div className="carousel-caption text-start position-absolute p-3 custom-caption">
+                                    <h2 className="carousel-title fw-bold text-warning mb-2">
                                         {slide.title}
                                     </h2>
-                                    <p className="carousel-description text-light fs-5">
+                                    <p className="carousel-description d-none d-md-block text-light fs-5 mb-2">
                                         {slide.description}
                                     </p>
                                     {slide.button_text && (
-                                        <a href={slide.button_link} className="btn btn-warning fw-bold mt-3">
+                                        <a
+                                            href={slide.button_link}
+                                            className="btn btn-warning fw-bold btn-custom"
+                                        >
                                             {slide.button_text}
                                         </a>
                                     )}
@@ -70,22 +73,31 @@ export default function CarouselComponent({ slides = [] }) {
                     max-width: 600px;
                 }
 
+                .custom-caption {
+                    top: 20%; /* Move higher */
+                    transform: translateY(0); /* No vertical offset */
+                    z-index: 2;
+                }
+
+                .btn-custom {
+                    padding: 0.25rem 0.75rem;
+                    font-size: 0.85rem;
+                }
+
                 @media (max-width: 768px) {
                     .carousel-title {
-                        font-size: 1.5rem;
+                        font-size: 1.25rem;
                     }
 
                     .carousel-description {
-                        font-size: 1rem;
+                        font-size: 0.9rem;
+                    }
+
+                    .btn-custom {
+                        font-size: 0.55rem;
+                        padding: 0.3rem 0.8rem;
                     }
                 }
-                    .custom-caption {
-                        top: 40%;
-                        transform: translateY(-45%);
-                        z-index: 2;
-
-                    }
-
             `}</style>
         </div>
     );

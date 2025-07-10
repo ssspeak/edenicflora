@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
+use App\Models\Setting;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slide;
@@ -108,6 +109,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('dashboard/settings', [AdminController::class, 'settings'])->name('dashboard.settings');
     Route::post('dashboard/settings/saveemail', [AdminController::class, 'saveemail'])->name('dashboard.settings.saveemail');
+    Route::post('dashboard/settings/savephone', [AdminController::class, 'savePhone'])->name('dashboard.settings.savephone');
+
+    Route::get('dashboard/categories', [AdminController::class, 'categories'])->name('dashboard.categories');
+    Route::post('dashboard/categories/store', [AdminController::class, 'storeCategory'])->name('dashboard.categories.store');
+    Route::put('dashboard/categories/{category}', [AdminController::class, 'updateCategory'])->name('dashboard.categories.update');
+    Route::delete('dashboard/categories/{category}', [AdminController::class, 'deleteCategory'])->name('dashboard.categories.delete');
 
     Route::get('dashboard/orders', [OrderController::class, 'index'])->name('dashboard.orders');
     Route::get('dashboard/orders/{order_number}', [OrderController::class, 'show'])->name('dashboard.orders.show');
@@ -129,6 +136,11 @@ Route::get('/api/deals/latest', [App\Http\Controllers\ProductController::class, 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'products']);
 Route::get('/menus-json', function () {
     return Menu::with('children')->whereNull('parent_id')->orderBy('order')->get();
+});
+Route::get('/api/settings/phone', function () {
+    return response()->json([
+        'phone' => Setting::where('key', 'default_phone')->value('value') ?? 'N/A'
+    ]);
 });
 
 Route::post('/orders', [OrderController::class, 'store']);

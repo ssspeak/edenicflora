@@ -48,7 +48,7 @@ export default function OrderDetail() {
                 value={data.status}
                 onChange={handleStatusChange}
                 disabled={processing}
-                className="border px-3 py-2 pr-8 rounded text-sm focus:outline-none focus:ring focus:border-blue-400 transition"
+                className="border px-3 py-2 pr-10 rounded text-sm focus:outline-none focus:ring focus:border-blue-400 transition"
               >
                 <option value="pending">Pending</option>
                 <option value="dispatched">Dispatched</option>

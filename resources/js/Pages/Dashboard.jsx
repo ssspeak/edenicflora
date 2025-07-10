@@ -4,6 +4,8 @@ import { usePage } from "@inertiajs/react";
 import AdminSidebar from "./Admin/AdminSidebar";
 import "../../css/tailwind.css";
 
+import Home from "@/js/Pages/Admin/Home";
+
 export default function Dashboard({ children, title = "Dashboard", description = "" }) {
     return (
         <AuthenticatedLayout>
@@ -14,7 +16,7 @@ export default function Dashboard({ children, title = "Dashboard", description =
                 {/* Main Content */}
                 <main className="flex-1 p-8">
                     <div className="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h1>
+                        <h1 className="text-2xl font-bold text-gray-3900 dark:text-gray-100">{title}</h1>
                         {description && (
                             <p className="mt-4 text-gray-600 dark:text-gray-300">{description}</p>
                         )}

@@ -21,7 +21,7 @@ use App\Http\Controllers\SlideController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\DashboardController;
 /*Route::get('/test-email', function () {
     $data = [
         'name' => 'Test User',
@@ -50,16 +50,11 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
 
-    Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
+    Route::get('/dashboard',  [DashboardController::class, 'stats'])->name('dashboard');
     Route::get('/', function () { return redirect()->route('dashboard'); });
+    Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
+    Route::get('/dashboard/home', [DashboardController::class, 'stats'])->name('dashboard.home');
 
-    //Routes for Dashboard Home page
-    Route::get('/dashboard/home', function () {
-        return Inertia::render('Admin/Home', [
-            'title' => 'Welcome to Dashboard Home Page',
-            'description' => 'This is the latest data from the database.',
-        ]);
-    })->name('dashboard.home');
 
 
     //Routes for Dashboard Home page

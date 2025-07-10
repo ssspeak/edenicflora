@@ -56,7 +56,22 @@ export default function Orders() {
                     )}
                     <td className="px-4 py-2 border">{order.name}</td>
                     <td className="px-4 py-2 border">{order.phone}</td>
-                    <td className="px-4 py-2 border capitalize">{order.order_status}</td>
+                    <td
+                    className={`px-4 py-2 border capitalize text-black text-center ${
+                        order.order_status === "pending"
+                        ? "bg-orange-400"
+                        : order.order_status === "dispatched"
+                        ? "bg-blue-400"
+                        : order.order_status === "completed"
+                        ? "bg-green-600"
+                        : order.order_status === "canceled"
+                        ? "bg-red-500"
+                        : "bg-gray-300"
+                    }`}
+                    >
+                    {order.order_status}
+                    </td>
+
                     <td className="px-4 py-2 border capitalize">{order.payment_method}</td>
                     <td className="px-4 py-2 border">{order.transaction_id}</td>
                     <td className="px-4 py-2 border text-sm">

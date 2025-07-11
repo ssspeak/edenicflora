@@ -23,6 +23,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SearchController;
+
 /*Route::get('/test-email', function () {
     $data = [
         'name' => 'Test User',
@@ -144,5 +146,7 @@ Route::get('/api/settings/phone', function () {
 });
 
 Route::post('/orders', [OrderController::class, 'store']);
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 require __DIR__.'/auth.php';

@@ -13,7 +13,7 @@ function NavigationBar({ menus }) {
             style={{
 
                 position: "relative",
-                zIndex: 1050,
+
             }}
         >
             <Container>

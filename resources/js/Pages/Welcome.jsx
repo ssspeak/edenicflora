@@ -19,7 +19,7 @@ export default function Welcome({slides, topDiscountedProducts}) {
 
   return (
     <>
-            <Head title="Cart - Edenic Flora" />
+    <Head title="Welcome to Edenic Flora" />
 
     <CartProvider>
         <Layout>
